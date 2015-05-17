@@ -24,6 +24,7 @@ public class SmashController : MonoBehaviour
 			if (selected) { // already an object selected
 				if (selected == selectedDown) {
 					Debug.Log ("Smashing!");
+					Debug.Log (selected.GetComponent<SmashObject>().getMaxStartingSpeed());
 				} else {
 					ChangeMaterial (selected, unselectedMaterial);
 					selected = selectedDown;
