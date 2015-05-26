@@ -23,8 +23,19 @@ public class SmashController : MonoBehaviour
 			posUp = GetClickPos (selectedDown);
 			if (selected) { // already an object selected
 				if (selected == selectedDown) {
+					SmashObject smash = selected.GetComponent<SmashObject>();
+					Rigidbody rb = selected.GetComponent<Rigidbody>();
+
 					Debug.Log ("Smashing!");
-					Debug.Log (selected.GetComponent<SmashObject>().getMaxStartingSpeed());
+					Debug.DrawLine(posDown, posUp);
+
+					Vector3 path = posUp - posDown;
+					float dist = path.magnitude;
+					float speed = smash.getInitialSpeed(Mathf.Min(dist, smash.moveDistance));
+					Debug.Log ("speed = " + speed);
+					path.Normalize();
+					path *= -speed;
+					rb.AddForce(path, ForceMode.VelocityChange);
 				} else {
 					ChangeMaterial (selected, unselectedMaterial);
 					selected = selectedDown;
